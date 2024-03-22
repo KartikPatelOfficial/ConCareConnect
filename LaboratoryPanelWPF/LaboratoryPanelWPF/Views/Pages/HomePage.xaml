@@ -1,0 +1,13 @@
+﻿<Page x:Class="LaboratoryPanelWPF.Views.Pages.HomePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:LaboratoryPanelWPF.Views.Pages"
+      mc:Ignorable="d" 
+      Title="HomePage">
+
+    <Grid Margin="28 0">
+        <TextBlock Margin="0 32 0 0" Text="Home Page" FontSize="24" FontWeight="Bold" />
+    </Grid>
+</Page>

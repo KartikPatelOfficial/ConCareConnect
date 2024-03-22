@@ -1,0 +1,99 @@
+﻿<Page x:Class="LaboratoryPanelWPF.Views.Pages.TestMaster.AllTestGroupsPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+          xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:LaboratoryPanelWPF.Views.Pages.TestMaster"
+        mc:Ignorable="d"
+      ScrollViewer.CanContentScroll="False"
+        Title="AllTestGroupsPage">
+
+
+    <Grid Margin="0 16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0"
+              Margin="36 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="2"
+                    FontSize="18"
+                    Margin="16 0 0 0"
+                    Padding="24 0"
+                    MinHeight="50"
+                    Height="Auto"
+                    Command="{Binding RunAddTestGroupDialogCommand}">
+
+                <StackPanel Orientation="Horizontal">
+                    <md:PackIcon Kind="Add"
+                                 VerticalAlignment="Center" />
+                    <TextBlock Text="Add Test Group"
+                               Margin="8 0 0 0 " />
+                </StackPanel>
+            </Button>
+        </Grid>
+        <Grid Grid.Row="1"
+              Margin="36 16 36 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="SearchBox"
+                     Grid.Column="2"
+                     Padding="12" />
+        </Grid>
+        <Grid Grid.Row="2"
+              Margin="36 16">
+            <DataGrid ItemsSource="{Binding TestGroups}"
+                      CanUserAddRows="False"
+                      SelectionMode="Single"
+                      SelectionUnit="FullRow"
+                      GridLinesVisibility="All"
+                      IsReadOnly="True"
+                      HorizontalGridLinesBrush="{DynamicResource MaterialDesignDarkSeparatorBackground}"
+                      CanUserDeleteRows="False"
+                      AutoGenerateColumns="False">
+
+
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="ID"
+                                        Width="Auto"
+                                        Binding="{Binding Id}" />
+                    <DataGridTextColumn Header="Name"
+                                        Width="*"
+                                        TextBlock.FontWeight="Bold"
+                                        Binding="{Binding GroupName}" />
+                    <DataGridTextColumn Header="Printing Name"
+                                        Width="2*"
+                                        Binding="{Binding PrintingName}" />
+
+                    <DataGridTemplateColumn Header="Actions">
+                        <DataGridTemplateColumn.CellTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <Button Command="{Binding DataContext.RunEditCategoryDialogCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            CommandParameter="{Binding}">
+                                        <md:PackIcon Kind="Edit" />
+                                    </Button>
+                                    <Button Command="{Binding DataContext.RunDeleteCategoryDialogCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                            Foreground="Red"
+                                            CommandParameter="{Binding}">
+                                        <md:PackIcon Kind="Delete" />
+                                    </Button>
+                                </StackPanel>
+                            </DataTemplate>
+                        </DataGridTemplateColumn.CellTemplate>
+                    </DataGridTemplateColumn>
+                </DataGrid.Columns>
+            </DataGrid>
+        </Grid>
+    </Grid>
+</Page>

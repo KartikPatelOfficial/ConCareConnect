@@ -1,0 +1,420 @@
+﻿<Page x:Class="LaboratoryPanelWPF.Views.Pages.AddAppointmentPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:local="clr-namespace:LaboratoryPanelWPF.Views.Pages"
+      mc:Ignorable="d"
+      d:DesignHeight="450"
+      d:DesignWidth="800"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      ui:NavigationView.HeaderContent="Add Appointment"
+      ScrollViewer.CanContentScroll="False"
+      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      Title="AddAppointmentPage">
+
+    <Grid Margin="0 16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0"
+              Margin="36 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <StackPanel Grid.Column="2"
+                        Orientation="Horizontal">
+
+                <Button FontSize="18"
+                        Margin="16 0 0 0"
+                        Padding="24 16"
+                        Command="{Binding GenerateInvoiceCommand}"
+                        Height="Auto">
+
+                    <StackPanel Orientation="Horizontal">
+                        <ui:SymbolIcon Symbol="Print20" />
+                        <TextBlock Text="Generate Invoice"
+                                   Margin="8 0 0 0" />
+                    </StackPanel>
+                </Button>
+
+                <Button FontSize="18"
+                        Margin="16 0 0 0"
+                        Padding="24 16"
+                        Command="{Binding SaveTestCommand}"
+                        Height="Auto">
+
+                    <StackPanel Orientation="Horizontal">
+                        <ui:SymbolIcon Symbol="Save20" />
+                        <TextBlock Text="Save"
+                                   Margin="8 0 0 0" />
+
+
+                    </StackPanel>
+                </Button>
+            </StackPanel>
+        </Grid>
+
+        <Grid Grid.Row="1"
+              Margin="24">
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <Grid MaxWidth="600">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <StackPanel>
+                    <TextBlock Text="Doctors"
+                               Foreground="{StaticResource TextFillColorPrimaryBrush}" />
+                    <Grid Margin="0 8 0 0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <ComboBox Grid.Column="0"
+                                  Margin="0 0 4 0"
+                                  IsTextSearchEnabled="True"
+                                  IsEditable="True"
+                                  TextSearch.TextPath="Name"
+                                  ItemsSource="{Binding Doctors, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedValue="{Binding Doctor}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <ComboBox Grid.Column="1"
+                                  Margin="4 0 0 0"
+                                  IsTextSearchEnabled="True"
+                                  IsEditable="True"
+                                  TextSearch.TextPath="Name"
+                                  ItemsSource="{Binding Doctors, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedValue="{Binding SecondDoctor}">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Name}" />
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                        <Button Grid.Column="2"
+                                Margin="4 0 0 0"
+                                Command="{Binding AddReferenceCommand}"
+                                Content="+ Add"
+                                ToolTip="Add New Doctor">
+                        </Button>
+                    </Grid>
+                </StackPanel>
+
+                <Grid Grid.Row="1"
+                      Margin="0,16,0,16">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <ui:TextBox Margin="0 4 4 0"
+                                PlaceholderText="Sample Type"
+                                Text="{Binding SampleType, UpdateSourceTrigger=PropertyChanged}" />
+
+                    <ui:TextBox Grid.Column="1"
+                                Margin="0 4 4 0"
+                                PlaceholderText="Patient Type"
+                                Text="{Binding PatientType, UpdateSourceTrigger=PropertyChanged}" />
+                </Grid>
+
+                <StackPanel Grid.Row="2"
+                            Margin="0,16,0,16">
+
+                    <TextBlock Text="Select Test"
+                               Foreground="{StaticResource TextFillColorSecondaryBrush}" />
+
+                    <TextBox x:Name="SearchBox"
+                             Margin="0 4 0 0" />
+                </StackPanel>
+
+                <DataGrid x:Name="AllTestsDataGrid"
+                          Grid.Row="4"
+                          AutoGenerateColumns="False"
+                          RowHeight="30"
+                          CanUserAddRows="False"
+                          CanUserDeleteRows="False"
+                          CanUserReorderColumns="False"
+                          IsReadOnly="True"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto"
+                          SelectionMode="Single"
+                          ItemsSource="{Binding AllTestsCollectionView}"
+                          SelectionChanged="OnTestSelectionChange">
+
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Binding="{Binding Name}"
+                                            Header="Name"
+                                            Width="*" />
+                        <DataGridTextColumn Binding="{Binding Cost}"
+                                            Header="Price"
+                                            Width="Auto" />
+                    </DataGrid.Columns>
+
+                </DataGrid>
+            </Grid>
+            <Border  MaxWidth="650"
+                     Grid.Column="1"
+                     Padding="16"
+                     Background="{ui:ThemeResource CardBackgroundFillColorDefaultBrush}"
+                     BorderBrush="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                     TextElement.Foreground="{ui:ThemeResource TextFillColorInverseBrush}"
+                     BorderThickness="1,1,1,0"
+                     CornerRadius="8,8,0,0">
+                <Grid>
+
+
+
+                    <Grid Margin="24 16">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <ui:TextBlock Grid.Column="0"
+                                          Text="Date: 27/09/2021"
+                                          FontTypography="Body"
+                                          Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                                          TextAlignment="Left" />
+                            <ui:TextBlock Grid.Column="1"
+                                          Text="Aastha Labs"
+                                          Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                                          FontTypography="Caption"
+                                          TextAlignment="Right" />
+
+                        </Grid>
+
+                        <ui:TextBlock Grid.Row="1"
+                                      Text="Invoice"
+                                      FontTypography="Title"
+                                      Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                                      TextAlignment="Center" />
+
+                        <Separator Grid.Row="2"
+                                   Background="{ui:ThemeResource CardStrokeColorDefaultBrush}"
+                                   Margin="0 8" />
+
+                        <StackPanel Grid.Row="3">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0"
+                                           Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                                           Text="Name" />
+                                <TextBlock Grid.Column="1"
+                                           Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                                           Text="{Binding Patient.Name}"
+                                           FontWeight="DemiBold" />
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0"
+                                           Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                                           Text="Email" />
+                                <TextBlock Grid.Column="1"
+                                           Text="{Binding Patient.Email}"
+                                           Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                                           FontWeight="DemiBold" />
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0"
+                                           Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                                           Text="Phone" />
+                                <TextBlock Grid.Column="1"
+                                           Text="{Binding Patient.Phone}"
+                                           Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                                           FontWeight="DemiBold" />
+                            </Grid>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0"
+                                           Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                                           Text="Address" />
+                                <TextBlock Grid.Column="1"
+                                           Foreground="{StaticResource TextFillColorPrimaryBrush}"
+                                           Text="{Binding Patient.Address}"
+                                           FontWeight="DemiBold" />
+                            </Grid>
+                        </StackPanel>
+
+                        <Separator Grid.Row="4"
+                                   Margin="0 8" />
+
+                        <DataGrid Grid.Row="6"
+                                  AutoGenerateColumns="False"
+                                  IsReadOnly="True"
+                                  ItemsSource="{Binding SelectedTestsCollectionView}"
+                                  Margin="0 8 0 0">
+                            <DataGrid.Columns>
+                                <DataGridTemplateColumn>
+                                    <DataGridTemplateColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <Button Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext.DeleteTestCommand}"
+                                                    CommandParameter="{Binding}"
+                                                    Content="X">
+                                            </Button>
+                                        </DataTemplate>
+                                    </DataGridTemplateColumn.CellTemplate>
+                                </DataGridTemplateColumn>
+                                <DataGridTextColumn Header="Name"
+                                                    Width="1*"
+                                                    Binding="{Binding Name}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="VerticalAlignment"
+                                                    Value="Center" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Price"
+                                                    Binding="{Binding Cost}"
+                                                    FontWeight="DemiBold">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="TextBlock">
+                                            <Setter Property="VerticalAlignment"
+                                                    Value="Center" />
+                                            <Setter Property="HorizontalAlignment"
+                                                    Value="Right" />
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
+
+                        <Grid Grid.Row="7">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.Resources>
+                                <Style x:Key="PriceTitle"
+                                       TargetType="TextBlock">
+                                    <Setter Property="FontSize"
+                                            Value="16" />
+                                    <Setter Property="FontWeight"
+                                            Value="SemiBold" />
+                                    <Setter Property="VerticalAlignment"
+                                            Value="Center" />
+                                </Style>
+                            </Grid.Resources>
+
+                            <StackPanel Grid.Column="1"
+                                        Margin="0 16 0 0">
+                                <Grid Margin="0 4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Subtotal"
+                                               TextAlignment="Right"
+                                               Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                                               Style="{StaticResource PriceTitle}" />
+                                    <TextBlock Grid.Column="1"
+                                               FontWeight="DemiBold"
+                                               Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                                               TextAlignment="Right"
+                                               Text="{Binding SubTotal, UpdateSourceTrigger=PropertyChanged}" />
+                                </Grid>
+                                <Grid Margin="0 4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Discount"
+                                               VerticalAlignment="Center"
+                                               Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                                               TextAlignment="Right"
+                                               Style="{StaticResource PriceTitle}" />
+                                    <TextBox Grid.Column="1"
+                                             TextAlignment="Right"
+                                             Padding="4"
+                                             Margin="16 0 0 0"
+                                             Text="{Binding Discount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </Grid>
+                                <Separator Background="#25AFAFAF" />
+                                <Grid Margin="0 4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Grand Total"
+                                               TextAlignment="Right"
+                                               Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                                               Style="{StaticResource PriceTitle}" />
+                                    <TextBlock Grid.Column="1"
+                                               FontWeight="DemiBold"
+                                               Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                                               TextAlignment="Right"
+                                               Text="{Binding GrandTotal, UpdateSourceTrigger=PropertyChanged}" />
+                                </Grid>
+                                <Grid Margin="0 4">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition />
+                                        <ColumnDefinition />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="Paid"
+                                               TextAlignment="Right"
+                                               Foreground="{StaticResource TextFillColorSecondaryBrush}"
+                                               Style="{StaticResource PriceTitle}"
+                                               VerticalAlignment="Center" />
+
+                                    <TextBox Grid.Column="1"
+                                             TextAlignment="Right"
+                                             Padding="4"
+                                             Margin="16 0 0 0"
+                                             Text="{Binding Paid, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Grid>
+
+            </Border>
+        </Grid>
+
+    </Grid>
+</Page>

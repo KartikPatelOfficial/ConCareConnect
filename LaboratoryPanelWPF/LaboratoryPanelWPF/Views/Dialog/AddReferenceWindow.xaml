@@ -1,0 +1,90 @@
+﻿<ui:FluentWindow x:Class="LaboratoryPanelWPF.Views.Dialog.AddReferenceWindow"
+                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                 xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                 xmlns:local="clr-namespace:LaboratoryPanelWPF.Views.Dialog"
+                 xmlns:system="clr-namespace:System;assembly=mscorlib"
+                 mc:Ignorable="d"
+                 xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+                 Title="AddReferenceWindow"
+                 Width="600">
+
+    <Grid Margin="24">
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0"
+                    Margin="0 0 0 16">
+            <ui:TextBlock Text="Add Reference"
+                          FontTypography="Title" />
+            <ui:TextBlock TextWrapping="Wrap"
+                          Text="Enter the details of the reference. It will be added to the list of references So that we can use it later for the analysis and generate the report."
+                          FontTypography="Caption" />
+        </StackPanel>
+
+        <StackPanel Grid.Row="1"
+                    Margin="16">
+            <TextBlock Text="Name"
+                       FontSize="18" />
+            <TextBox Margin="0 6 0 0"
+                     Text="{Binding Name}"
+                     FontSize="18" />
+            <TextBlock Text="Qualification"
+                       FontSize="18"
+                       Margin="0 8 0 0" />
+            <TextBox Text="{Binding Qualification}"
+                     Margin="0 8 0 0"
+                     FontSize="16" />
+            <TextBlock Text="Address"
+                       FontSize="18"
+                       Margin="0 8 0 0" />
+            <TextBox Text="{Binding Address}"
+                     Margin="0 8 0 0"
+                     FontSize="16" />
+            <TextBlock Text="Phone"
+                       FontSize="18"
+                       Margin="0 8 0 0" />
+            <TextBox Margin="0 6 0 0"
+                     Text="{Binding Phone}"
+                     FontSize="18" />
+            <TextBlock Text="Hospital"
+                       FontSize="18"
+                       Margin="0 8 0 0" />
+            <TextBox Margin="0 6 0 0"
+                     Text="{Binding Hospital}"
+                     FontSize="18" />
+            <TextBlock Text="CutOff"
+                       FontSize="18"
+                       Margin="0 8 0 0" />
+            <TextBox Text="{Binding CutOff}"
+                     Margin="0 8 0 0"
+                     FontSize="16" />
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal"
+                    Grid.Row="2"
+                    FlowDirection="RightToLeft"
+                    Margin="0 16 0 0">
+            <Button Click="Button_Click"
+                    Margin="0 0 16 0">
+                <Button.CommandParameter>
+                    <system:Boolean>False</system:Boolean>
+                </Button.CommandParameter>
+                Cancel
+            </Button>
+            <Button IsDefault="True"
+                    Command="{Binding AddCommand}">
+                <Button.CommandParameter>
+                    <system:Boolean>True</system:Boolean>
+                </Button.CommandParameter>
+                ADD
+            </Button>
+
+        </StackPanel>
+    </Grid>
+</ui:FluentWindow>
