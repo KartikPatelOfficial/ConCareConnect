@@ -94,11 +94,4 @@ dotnet run
 ## License
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
-I chose MIT License because 
-
-: It is a permissive license.
-It is short and to the point.
-It lets people do what they want with the project.
-It is widely used.
-
 
